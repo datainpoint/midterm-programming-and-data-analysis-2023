@@ -1,0 +1,85 @@
+import unittest
+import importlib
+
+class TestMidterm(unittest.TestCase):
+    def test_01_format_date_with_padding_zero(self):
+        self.assertEqual(asgmt.format_date_with_padding_zero(2023, 9, 9), '2023-09-09')
+        self.assertEqual(asgmt.format_date_with_padding_zero(2023, 9, 10), '2023-09-10')
+        self.assertEqual(asgmt.format_date_with_padding_zero(2023, 10, 9), '2023-10-09')
+        self.assertEqual(asgmt.format_date_with_padding_zero(2023, 10, 10), '2023-10-10')
+        self.assertEqual(asgmt.format_date_with_padding_zero(2024, 1, 1), '2024-01-01')
+        self.assertEqual(asgmt.format_date_with_padding_zero(2024, 1, 9), '2024-01-09')
+        self.assertEqual(asgmt.format_date_with_padding_zero(2024, 1, 10), '2024-01-10')
+    def test_02_semantic_typing(self):
+        self.assertEqual(asgmt.semantic_typing(5566), 'The type of your input 5566 is integer.')
+        self.assertEqual(asgmt.semantic_typing(3.1415), 'The type of your input 3.1415 is float.')
+        self.assertEqual(asgmt.semantic_typing(False), 'The type of your input False is boolean.')
+        self.assertEqual(asgmt.semantic_typing(True), 'The type of your input True is boolean.')
+        self.assertEqual(asgmt.semantic_typing("Python"), 'The type of your input Python is string.')
+        self.assertEqual(asgmt.semantic_typing("False"), 'The type of your input False is string.')
+        self.assertEqual(asgmt.semantic_typing("True"), 'The type of your input True is string.')
+    def test_03_semantic_calculator(self):
+        self.assertEqual(asgmt.semantic_calculator(55, 66, "+"), 121)
+        self.assertEqual(asgmt.semantic_calculator(55, 66, "-"), -11)
+        self.assertEqual(asgmt.semantic_calculator(3, 5, "*"), 15)
+        self.assertEqual(asgmt.semantic_calculator(3, 5, "/"), 0.6)
+        self.assertEqual(asgmt.semantic_calculator(3, 5, "//"), 0)
+        self.assertEqual(asgmt.semantic_calculator(3, 5, "**"), 243)
+    def test_04_return_days_abbreviation(self):
+        self.assertEqual(asgmt.return_days_abbreviation("Sunday"), 'Sun')
+        self.assertEqual(asgmt.return_days_abbreviation("Monday"), 'Mon')
+        self.assertEqual(asgmt.return_days_abbreviation("Tuesday"), 'Tue')
+        self.assertEqual(asgmt.return_days_abbreviation("Wednesday"), 'Wed')
+        self.assertEqual(asgmt.return_days_abbreviation("Thursday"), 'Thu')
+        self.assertEqual(asgmt.return_days_abbreviation("Friday"), 'Fri')
+        self.assertEqual(asgmt.return_days_abbreviation("Saturday"), 'Sat')
+    def test_05_return_days_fullname_abbreviation_from_int(self):
+        self.assertEqual(asgmt.return_days_fullname_abbreviation_from_int(0), ('Sunday', 'Sun'))
+        self.assertEqual(asgmt.return_days_fullname_abbreviation_from_int(1), ('Monday', 'Mon'))
+        self.assertEqual(asgmt.return_days_fullname_abbreviation_from_int(2), ('Tuesday', 'Tue'))
+        self.assertEqual(asgmt.return_days_fullname_abbreviation_from_int(3), ('Wednesday', 'Wed'))
+        self.assertEqual(asgmt.return_days_fullname_abbreviation_from_int(4), ('Thursday', 'Thu'))
+        self.assertEqual(asgmt.return_days_fullname_abbreviation_from_int(5), ('Friday', 'Fri'))
+        self.assertEqual(asgmt.return_days_fullname_abbreviation_from_int(6), ('Saturday', 'Sat'))
+    def test_06_square_negatives(self):
+        self.assertEqual(asgmt.square_negatives(-3, -2, -1, 0, 1, 2, 3), [9, 4, 1])
+        self.assertEqual(asgmt.square_negatives(-3, -2, -1, 0, 1, 2, 3, '4', '5'), [9, 4, 1])
+        self.assertEqual(asgmt.square_negatives(-3, -2, -1, False, True, 2, 3, '4', '5'), [9, 4, 1])
+        self.assertEqual(asgmt.square_negatives(-4, -3, -2, -1, False, True, 2, 3, '4', '5', '6'), [16, 9, 4, 1])
+        self.assertEqual(asgmt.square_negatives(-5, -4, -3, -2, -1, False, True, 2, 3, '4', '5', 6, 7), [25, 16, 9, 4, 1])
+    def test_07_remove_duplicates_and_sort(self):
+        self.assertEqual(asgmt.remove_duplicates_and_sort(2, 3, 5, 7, 11, 11, 7, 5, 3, 2), [2, 3, 5, 7, 11])
+        self.assertEqual(asgmt.remove_duplicates_and_sort(13, 17, 19, 23, 29, 31, 31, 29, 23, 19, 17, 13), [13, 17, 19, 23, 29, 31])
+        self.assertEqual(asgmt.remove_duplicates_and_sort(10, 9, 8, 6, 4, 1, 1, 4, 6, 8, 9, 10), [1, 4, 6, 8, 9, 10])
+        self.assertEqual(asgmt.remove_duplicates_and_sort(2, 2, 3, 3, 5, 5), [2, 3, 5])
+        self.assertEqual(asgmt.remove_duplicates_and_sort(5, 5, 6, 6, 7, 7, 8, 8), [5, 6, 7, 8])
+    def test_08_find_idxmin_idxmax(self):
+        self.assertEqual(asgmt.find_idxmin_idxmax([2, 3, 5, 7, 11]), {'idxmin': [0], 'idxmax': [4]})
+        self.assertEqual(asgmt.find_idxmin_idxmax([2, 3, 5, 7, 11, 11, 7, 5, 3, 2]), {'idxmin': [0, 9], 'idxmax': [4, 5]})
+        self.assertEqual(asgmt.find_idxmin_idxmax([10, 9, 8, 6, 4, 1]), {'idxmin': [5], 'idxmax': [0]})
+        self.assertEqual(asgmt.find_idxmin_idxmax([10, 9, 8, 6, 4, 1, 1, 4, 6, 8, 9, 10]), {'idxmin': [5, 6], 'idxmax': [0, 11]})
+        self.assertEqual(asgmt.find_idxmin_idxmax([1, 2, 3, 3, 2, 1]), {'idxmin': [0, 5], 'idxmax': [2, 3]})
+    def test_09_pig_latin(self):
+        self.assertEqual(asgmt.pig_latin("pig"), 'igpay')
+        self.assertEqual(asgmt.pig_latin("smile"), 'ilesmay')
+        self.assertEqual(asgmt.pig_latin("eat"), 'eatyay')
+        self.assertEqual(asgmt.pig_latin("latin"), 'atinlay')
+        self.assertEqual(asgmt.pig_latin("apple"), 'appleyay')
+    def test_10_fibonacci(self):
+        self.assertEqual(asgmt.fibonacci(0, 1, 5), [0, 1, 1, 2, 3])
+        self.assertEqual(asgmt.fibonacci(0, 1, 7), [0, 1, 1, 2, 3, 5, 8])
+        self.assertEqual(asgmt.fibonacci(0, 1, 11), [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55])
+        self.assertEqual(asgmt.fibonacci(0, 1, 3), [0, 1, 1])
+        self.assertEqual(asgmt.fibonacci(1, 1, 5), [1, 1, 2, 3, 5])
+        self.assertEqual(asgmt.fibonacci(1, 2, 5), [1, 2, 3, 5, 8])
+        self.assertEqual(asgmt.fibonacci(2, 3, 5), [2, 3, 5, 8, 13])
+
+asgmt = importlib.import_module("midterm")
+suite = unittest.TestLoader().loadTestsFromTestCase(TestMidterm)
+runner = unittest.TextTestRunner(verbosity=2)
+test_results = runner.run(suite)
+number_of_failures = len(test_results.failures)
+number_of_errors = len(test_results.errors)
+number_of_test_runs = test_results.testsRun
+number_of_successes = number_of_test_runs - (number_of_failures + number_of_errors)
+print("You've got {} successes among {} questions.".format(number_of_successes, number_of_test_runs))

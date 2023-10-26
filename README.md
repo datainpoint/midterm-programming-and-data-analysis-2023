@@ -49,7 +49,7 @@ def semantic_typing(x) -> str:
 ## 03. Define a function `semantic_calculator()` which operates a few simple numeric calculations.
 
 ```python
-def semantic_calculator(x: int, y: int, opearator: str):
+def semantic_calculator(x: int, y: int, operator: str):
     """
     >>> semantic_calculator(55, 66, "+")
     121
